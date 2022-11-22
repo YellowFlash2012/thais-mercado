@@ -5,6 +5,11 @@ import {updateProfile} from 'firebase/auth'
 
 import { newUser, newUserWithEmailPw } from "../utils/firebase/firebase";
 
+import FormInput from "./form-input/FormInput";
+
+import "./signup.scss"
+import Button from "./button/Button";
+
 const defaultFormFields = {
     displayName:"",
     email: "",
@@ -59,12 +64,13 @@ const Signup = () => {
     }
 
     return (
-        <div>
-            <h1>Sign up with email and password</h1>
+        <div className="sign-up-container">
+            <h2>Don't have an account?</h2>
+            <span>Sign up with email and password</span>
 
             <form action="" onSubmit={submitHandler}>
-                <label htmlFor="displayName">Username</label>
-                <input
+                <FormInput
+                    label="Username"
                     type="text"
                     id="displayName"
                     required
@@ -72,8 +78,8 @@ const Signup = () => {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="email">Email</label>
-                <input
+                <FormInput
+                    label="Email"
                     type="email"
                     id="email"
                     required
@@ -81,8 +87,8 @@ const Signup = () => {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="pw">Password</label>
-                <input
+                <FormInput
+                    label="Password"
                     type="password"
                     id="pw"
                     required
@@ -90,8 +96,8 @@ const Signup = () => {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="cpw">Confirm Password</label>
-                <input
+                <FormInput
+                    label="Confirm Password"
                     type="password"
                     id="cpw"
                     required
@@ -99,7 +105,7 @@ const Signup = () => {
                     onChange={handleChange}
                 />
 
-                <button>Sign Up</button>
+                <Button>Sign up</Button>
             </form>
         </div>
     );
