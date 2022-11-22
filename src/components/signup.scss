@@ -6,4 +6,15 @@
     h2{
         margin: 10px;
     }
+
+    .buttons-container {
+        display: flex;justify-content: space-between;
+    }
+}
+
+.auth-container {
+    display: flex;
+    width: 900px;
+    justify-content: space-between;
+    margin: 30px auto;
 }

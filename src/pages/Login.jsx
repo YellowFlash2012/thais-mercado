@@ -1,10 +1,25 @@
 import {getRedirectResult} from "firebase/auth"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Button from "../components/button/Button";
+import FormInput from "../components/form-input/FormInput";
 import Signup from "../components/Signup";
 
-import { auth, newUser, signInWithGooglePopup, signInWithGoogleRedirect } from "../utils/firebase/firebase";
+import { auth, LoginWithEmailPw, newUser, signInWithGooglePopup, signInWithGoogleRedirect } from "../utils/firebase/firebase";
+
+import "../components/signup.scss"
+
+const defaultFormFields = {
+    email: "",
+    pw: "",
+};
 
 const Login = () => {
+    const [formFields, setFormFields] = useState(defaultFormFields);
+
+    const { email, pw } = formFields;
+
+    // console.log(formFields);
+
     const logGoogleUser = async () => {
         const {user} = await signInWithGooglePopup();
 
@@ -22,13 +37,72 @@ const Login = () => {
 
     //     getRed()
     // },[])
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+
+        setFormFields({ ...formFields, [id]: value });
+    };
     
+    const submitHandler = async (e) => {
+        e.preventDefault()
+
+        try {
+            const res = await LoginWithEmailPw(email, pw);
+
+            console.log(res);
+
+            setFormFields(defaultFormFields)
+        } catch (error) {
+            if (error.code === "auth/user-not-found") {
+                alert("User with that email doesn't exist");
+
+                return;
+            }
+
+            if (error.code === "auth/wrong-password") {
+                alert("Invalid credentials");
+            }
+
+            console.error(error);
+        }
+    }
     
     return (
-        <div>
-            Login
-            <button onClick={logGoogleUser}>Login with Google</button>
-            <Signup/>
+        <div className="auth-container">
+            <div className="sign-up-container">
+                <h2>Already have an account?</h2>
+                <span>Login with email and password</span>
+
+                <form action="" onSubmit={submitHandler}>
+                    <FormInput
+                        label="Email"
+                        type="email"
+                        id="email"
+                        required
+                        value={email}
+                        onChange={handleChange}
+                    />
+
+                    <FormInput
+                        label="Password"
+                        type="password"
+                        id="pw"
+                        required
+                        value={pw}
+                        onChange={handleChange}
+                    />
+
+                    <div className="buttons-container">
+                        <Button>Login</Button>
+
+                        <Button type="button" onClick={logGoogleUser} buttonType="google">
+                            Google Login
+                        </Button>
+                    </div>
+                </form>
+            </div>
+            <Signup />
         </div>
     );
 };
