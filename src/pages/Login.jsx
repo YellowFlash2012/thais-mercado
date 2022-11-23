@@ -1,5 +1,5 @@
 import {getRedirectResult} from "firebase/auth"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../components/button/Button";
 import FormInput from "../components/form-input/FormInput";
 import Signup from "../components/Signup";
@@ -7,6 +7,7 @@ import Signup from "../components/Signup";
 import { auth, LoginWithEmailPw, newUser, signInWithGooglePopup, signInWithGoogleRedirect } from "../utils/firebase/firebase";
 
 import "../components/signup.scss"
+import { UserContext } from "../contexts/user.context";
 
 const defaultFormFields = {
     email: "",
@@ -18,7 +19,7 @@ const Login = () => {
 
     const { email, pw } = formFields;
 
-    // console.log(formFields);
+    const { setCurrentUser } = useContext(UserContext);
 
     const logGoogleUser = async () => {
         const {user} = await signInWithGooglePopup();
@@ -48,9 +49,9 @@ const Login = () => {
         e.preventDefault()
 
         try {
-            const res = await LoginWithEmailPw(email, pw);
+            const {user} = await LoginWithEmailPw(email, pw);
 
-            console.log(res);
+            setCurrentUser(user)
 
             setFormFields(defaultFormFields)
         } catch (error) {
