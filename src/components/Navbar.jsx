@@ -1,25 +1,17 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import {toast} from "react-toastify"
-
 
 import { UserContext } from "../contexts/user.context";
 import { logout } from "../utils/firebase/firebase";
+
 import Button from "./button/Button";
 
 import "./navigation.styles.scss";
 
 const Navbar = () => {
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
 
-    const logoutHandler = async () => {
-        await logout()
-
-        setCurrentUser(null)
-
-        toast.success("Goodbye for now, see you next time")
-    }
 
     return (
         <>
@@ -39,7 +31,7 @@ const Navbar = () => {
                     </Link>
 
                     {currentUser ? (
-                        <Button onClick={logoutHandler} buttonType="google">LOGOUT</Button>
+                        <Button onClick={logout} buttonType="google">LOGOUT</Button>
                     ) : (
                         <Link to="/login" className="nav-link">
                             LOGIN

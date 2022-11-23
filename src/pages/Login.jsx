@@ -1,5 +1,7 @@
 import {getRedirectResult} from "firebase/auth"
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
+import {toast} from "react-toastify"
+
 import Button from "../components/button/Button";
 import FormInput from "../components/form-input/FormInput";
 import Signup from "../components/Signup";
@@ -7,7 +9,7 @@ import Signup from "../components/Signup";
 import { auth, LoginWithEmailPw, newUser, signInWithGooglePopup, signInWithGoogleRedirect } from "../utils/firebase/firebase";
 
 import "../components/signup.scss"
-import { UserContext } from "../contexts/user.context";
+
 
 const defaultFormFields = {
     email: "",
@@ -19,12 +21,10 @@ const Login = () => {
 
     const { email, pw } = formFields;
 
-    const { setCurrentUser } = useContext(UserContext);
-
     const logGoogleUser = async () => {
-        const {user} = await signInWithGooglePopup();
+        const { user } = await signInWithGooglePopup();
 
-        const userDocRef = await newUser(user);
+        toast.success(`Welcome back, ${user.displayName}`);
     }
 
     // useEffect(() => {
@@ -51,8 +51,8 @@ const Login = () => {
         try {
             const {user} = await LoginWithEmailPw(email, pw);
 
-            setCurrentUser(user)
-
+            toast.success(`Welcome back, ${user.displayName}`)
+            
             setFormFields(defaultFormFields)
         } catch (error) {
             if (error.code === "auth/user-not-found") {

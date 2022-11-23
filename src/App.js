@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 
 import "react-toastify/dist/ReactToastify.css";
+import Shop from './pages/Shop';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               <Navbar />
               <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/shop" element={<Shop />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/login" element={<Login />} />
 

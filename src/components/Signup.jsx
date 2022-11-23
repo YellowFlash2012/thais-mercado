@@ -1,15 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import {updateProfile} from 'firebase/auth'
-
+import {toast} from "react-toastify"
 
 import { newUser, newUserWithEmailPw } from "../utils/firebase/firebase";
 
 import FormInput from "./form-input/FormInput";
+import Button from "./button/Button";
 
 import "./signup.scss"
-import Button from "./button/Button";
-import { UserContext } from "../contexts/user.context";
+
 
 const defaultFormFields = {
     displayName:"",
@@ -22,7 +22,6 @@ const Signup = () => {
 
     const [formFields, setFormFields] = useState(defaultFormFields);
 
-    const { setCurrentUser } = useContext(UserContext);
 
     const { displayName, email, pw, cpw } = formFields;
 
@@ -50,7 +49,7 @@ const Signup = () => {
     
             await newUser(user, { displayName });
 
-            setCurrentUser(user)
+            toast.success(`Welcome, ${user.displayName}`);
 
             setFormFields(defaultFormFields)
         } catch (error) {
