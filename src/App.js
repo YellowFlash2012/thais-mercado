@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound';
 
 import "react-toastify/dist/ReactToastify.css";
 import Shop from './pages/Shop';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                   <Route path="/shop" element={<Shop />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/checkout" element={<Checkout />} />
 
                   <Route path="*" element={<NotFound />} />
               </Routes>
