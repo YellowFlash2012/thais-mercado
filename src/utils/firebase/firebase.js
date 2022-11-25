@@ -5,7 +5,7 @@ import { GoogleAuthProvider, getAuth, signInWithRedirect, signInWithPopup, creat
 
 import { toast } from "react-toastify";
 
-import {getFirestore,doc,getDoc,setDoc} from "firebase/firestore"
+import {getFirestore,doc,getDoc,setDoc,collection,writeBatch,query,getDocs} from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyA-8TnGheHNytUawI-R1vyYqztzFQnRNOU",
@@ -32,6 +32,20 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 // ***firestore config
 export const db = getFirestore();
+
+// ***seeding the db
+export const addCollAndDocs = async (collectionKeys, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKeys);
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach(object => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object);
+    });
+
+    await batch.commit();
+    console.log('Done');
+}
 
 export const newUser = async (userAuth, otherData={}) => {
     if (!userAuth) {
