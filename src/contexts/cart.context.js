@@ -33,6 +33,10 @@ const removeCartItem = (cartItems, pdt) => {
     );
 }
 
+const clearCartItem = (cartItems, pdt) => {
+    return cartItems.filter((cartItem) => cartItem.id !== pdt.id);
+}
+
 export const CartProvider = ({ children }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -40,10 +44,21 @@ export const CartProvider = ({ children }) => {
 
     const [cartCount, setCartCount] = useState(0);
 
+    const [cartTotal, setCartTotal] = useState(0);
+
     useEffect(() => {
         const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.qty, 0);
 
         setCartCount(newCartCount);
+    },[cartItems])
+    
+    useEffect(() => {
+        const newCartTotal = cartItems.reduce(
+            (total, cartItem) => total + cartItem.qty * cartItem.price,
+            0
+        );
+
+        setCartTotal(newCartTotal);
     },[cartItems])
 
     const addItemToCart = (pdt) => {
@@ -52,6 +67,10 @@ export const CartProvider = ({ children }) => {
     
     const removeItemfromCart = (pdt) => {
         setCartItems(removeCartItem(cartItems, pdt));
+    }
+    
+    const clearItemfromCart = (pdt) => {
+        setCartItems(clearCartItem(cartItems, pdt));
     }
 
 
@@ -64,6 +83,8 @@ export const CartProvider = ({ children }) => {
                 addItemToCart,
                 cartCount,
                 removeItemfromCart,
+                clearItemfromCart,
+                cartTotal,
             }}
         >
             {children}

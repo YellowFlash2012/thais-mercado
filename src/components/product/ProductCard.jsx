@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
 
             <div className="footer">
                 <span className="name">{product.name}</span>
-                <span className="price">{product.price}</span>
+                <span className="price">${product.price}</span>
             </div>
 
             <Button buttonType="inverted" onClick={()=>addItemToCart(product)}>
