@@ -9,8 +9,8 @@ import { logout } from "../utils/firebase/firebase";
 import Button from "./button/Button";
 import CartDropdown from "./cart-dropdown/CartDropdown";
 import CartIcon from "./cart-icon/CartIcon";
+import { LogoContainer, NavigationContainer, NavLink, NavLinks } from "./navigation.styles";
 
-import "./navigation.styles.scss";
 
 const Navbar = () => {
     const { currentUser } = useContext(UserContext);
@@ -20,34 +20,34 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="navigation">
-                <Link to="/" className="logo-container">
+            <NavigationContainer>
+                <LogoContainer to="/">
                     <div className="logo">
                         <h2 style={{ fontWeight: "bold" }}>ThaisMercado</h2>
                     </div>
-                </Link>
+                </LogoContainer>
 
-                <div className="nav-links-container">
-                    <Link to="/shop" className="nav-link">
+                <NavLinks>
+                    <NavLink to="/shop">
                         SHOP
-                    </Link>
-                    <Link to="/contact" className="nav-link">
+                    </NavLink>
+                    <NavLink to="/contact">
                         CONTACT
-                    </Link>
+                    </NavLink>
 
                     {currentUser ? (
-                        <Button onClick={logout} buttonType="google">LOGOUT</Button>
+                        <NavLink as='span' onClick={logout} >LOGOUT</NavLink>
                     ) : (
-                        <Link to="/login" className="nav-link">
+                        <NavLink to="/login">
                             LOGIN
-                        </Link>
+                        </NavLink>
                     )}
 
                     <CartIcon/>
-                </div>
+                </NavLinks>
 
                 {isDropdownOpen && <CartDropdown/>}
-            </div>
+            </NavigationContainer>
         </>
     );
 };

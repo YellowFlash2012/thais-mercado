@@ -2,7 +2,7 @@ import {getRedirectResult} from "firebase/auth"
 import { useState } from "react";
 import {toast} from "react-toastify"
 
-import Button from "../components/button/Button";
+import Button, {BUTTON_TYPE_CLASSES} from "../components/button/Button";
 import FormInput from "../components/form-input/FormInput";
 import Signup from "../components/Signup";
 
@@ -97,7 +97,11 @@ const Login = () => {
                     <div className="buttons-container">
                         <Button>Login</Button>
 
-                        <Button type="button" onClick={logGoogleUser} buttonType="google">
+                        <Button
+                            type="button"
+                            onClick={logGoogleUser}
+                            buttonType={BUTTON_TYPE_CLASSES.google}
+                        >
                             Google Login
                         </Button>
                     </div>
