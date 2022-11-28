@@ -1,7 +1,5 @@
 import { BackgroundImage, Body, CategoryItemContainer } from "./category-item.styles";
 
-
-
 const CategoryItem = ({ category }) => {
 
     return (
