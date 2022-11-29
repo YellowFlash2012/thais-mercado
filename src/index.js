@@ -1,14 +1,17 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
+import { Elements } from "@stripe/react-stripe-js";
+
 import { store } from "./app/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserPovider } from "./contexts/user.context";
-import { CategoriesProvider} from "./contexts/product.context";
+import { CategoriesProvider } from "./contexts/product.context";
 
 import "./index.css";
 import { CartProvider } from "./contexts/cart.context";
+import { stripePromise } from "./utils/stripe/stripe";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -19,8 +22,9 @@ root.render(
             <UserPovider>
                 <CategoriesProvider>
                     <CartProvider>
-
-                    <App />
+                        <Elements stripe={stripePromise}>
+                            <App />
+                        </Elements>
                     </CartProvider>
                 </CategoriesProvider>
             </UserPovider>
